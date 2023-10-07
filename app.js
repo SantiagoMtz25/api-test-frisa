@@ -8,7 +8,7 @@ require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_DB =
-  process.env.MONGO_DB || "mongodb+srv://santimtzv01:BX3MudEPPM0ppQKF@frisa-android-app.jenlgwe.mongodb.net/";
+  process.env.MONGO_DB || "mongodb+srv://santimtzv01:NK9d87DUH1NudDlR@frisa-android-app.jenlgwe.mongodb.net/";
 dbConnect();
 
 app.use(express.json());
