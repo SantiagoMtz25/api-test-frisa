@@ -1,10 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const OrgSchema = Schema({
-  email: { type: String, required: true },
-  name: { type: String, required: true },
-  description: { type: String, default: "" },
+const oscSchema = Schema({
+  adminName: String,
+  rfc: String,
+  description: String,
+  phoneNumber: String,
+  state: String,
+  city: String,
+  email: String,
+  webpage: String,
+  category: String,
+  avg: Number
 });
 
-module.exports = mongoose.model("Organization", OrgSchema);
+module.exports = mongoose.model("Orgs", oscSchema);
