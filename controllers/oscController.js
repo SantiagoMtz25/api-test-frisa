@@ -1,4 +1,4 @@
-const Osc = require("../schemas/oscSchema");
+const Osc = require("../model/org");
 //const jwt = require("jsonwebtoken");
 //const bcrypt = require("bcrypt");
 //const verifyToken = require("../middleware/verify");
