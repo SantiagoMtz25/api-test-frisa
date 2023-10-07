@@ -1,21 +1,13 @@
 const express = require("express");
-const app = express();
-const jwt = require("jsonwebtoken");
-const Org = require("../model/org");
-const verifyToken = require("../middleware/verify");
+const router = express.Router()
 
-app.post("/add", verifyToken, async (req, res) => {
-  try {
-    const { email, name, description } = req.body;
+const oscController = require('../controllers/oscController');
 
-    const newOrg = new Org({ email, name, description });
-    await newOrg.save();
+//Get All OSC
+router.get('/', oscController.getAllOsc);
 
-    res.status(201).json({ message: "Registro exitoso" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error" });
-  }
-});
+//register OSC
+router.post('/register', oscController.oscRegister);
 
-module.exports = app;
+
+module.exports = router
