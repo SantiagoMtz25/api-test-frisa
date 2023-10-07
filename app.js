@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 //Guardamos las rutas en donde se encuentra el router de user y osc
 //Ojo que solo hice tablas para user y osc debido a que con un valor booleano podemos identificar con  true a un admin y false a un usuario
 //asi nos ahorramos una tabla
+
 const userRoutes = require("./src/routes/userRouter");
 const oscRoutes = require("./src/routes/oscRouter");
 require("dotenv").config();
