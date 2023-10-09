@@ -15,4 +15,6 @@ const oscSchema = Schema({
   admited: { type: Boolean, default: false}
 });
 
+
+
 module.exports = mongoose.model("Orgs", oscSchema);
