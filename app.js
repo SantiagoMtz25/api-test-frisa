@@ -1,38 +1,26 @@
 //Importacion de librerias y cosas necesarias para correr el programa
 const express = require("express");
-const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const connectionDB = require('./config');
 
 //Guardamos las rutas en donde se encuentra el router de user y osc
-//Ojo que solo hice tablas para user y osc debido a que con un valor booleano podemos identificar con  true a un admin y false a un usuario
-//asi nos ahorramos una tabla
-const userRoutes = require("./routes/routeorg");
-const oscRoutes = require("./routes/routeuser");
-require("dotenv").config();
 
-//Declaracion de variables para la coneccion a base de datos en mongo
-const app = express();
-const PORT = process.env.PORT || 3000; //El puerto al que se conectara la aplicacion es al puerto 3000
-const MONGO_DB =
-  process.env.MONGO_DB || "mongodb://127.0.0.1:27017/frisa_app_db"; //link de coneccion a base de datos este varia en mi caso la base de datos la llame frisa_app_db lo demas se queda igual
-dbConnect();
+const userRoutes = require("./routes/routeuser");
+const oscRoutes = require("./routes/routeorg");
+
 
 //Cuando en el link lea /users o /ocs accedera a las rutas ya declaradas previamente
+const app = express();
 app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/osc", oscRoutes);
+dotenv.config()
 
 //Mostramos en que puerto se esta corriendo el servidor
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Servidor ejecutandose en el puerto: ${PORT}`);
 });
 
 //Mostramos que se haya conectado a la base de datos
-function dbConnect() {
-  if (process.env.MONGO_DB) {
-    console.log("Connecting to MongoDB in the cloud!");
-  } else {
-    console.log(`Connecting to Local instance of MongoDB : ${MONGO_DB}`);
-  }
-
-  mongoose.connect(MONGO_DB).then(() => console.log("Connected to DB!"));
-}
+connectionDB()
