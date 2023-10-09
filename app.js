@@ -17,7 +17,7 @@ app.use("/osc", oscRoutes);
 dotenv.config()
 
 //Mostramos en que puerto se esta corriendo el servidor
-const PORT = 3000;
+const PORT = 8080;
 app.listen(PORT, () => {
   console.log(`Servidor ejecutandose en el puerto: ${PORT}`);
 });
