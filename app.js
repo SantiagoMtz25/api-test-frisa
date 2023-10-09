@@ -5,8 +5,8 @@ const connectionDB = require('./config');
 
 //Guardamos las rutas en donde se encuentra el router de user y osc
 
-const userRoutes = require("./routes/userRouter");
-const oscRoutes = require("./routes/oscRouter");
+const userRoutes = require("./routes/routeuser");
+const oscRoutes = require("./routes/routeorg");
 
 
 //Cuando en el link lea /users o /ocs accedera a las rutas ya declaradas previamente
