@@ -1,4 +1,4 @@
-const Osc = require("../model/org");
+const Osc = require("../schemas/org");
 const jwt = require("jsonwebtoken");
 //const bcrypt = require("bcrypt");
 //const verifyToken = require("../middleware/verify");
@@ -31,6 +31,7 @@ async function getAllOsc(req, res){
 async function oscRegister(req, res) {
     try {
       const { 
+        name,
         adminName,
         rfc,
         description,
@@ -50,6 +51,7 @@ async function oscRegister(req, res) {
       } 
 
       const newOsc = new Osc({ 
+        name: name,
         adminName: adminName,
         rfc: rfc,
         description: description,
