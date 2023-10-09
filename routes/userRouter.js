@@ -13,6 +13,9 @@ router.post('/register', userController.userRegister)
 //Login
 router.put('/login', userController.userLogin)
 
+//add favorite
+router.patch('/addfav', userController.addFavorite)
+
 
 
 module.exports = router

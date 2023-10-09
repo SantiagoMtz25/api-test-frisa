@@ -11,7 +11,8 @@ const oscSchema = Schema({
   email: String,
   webpage: String,
   category: String,
-  avg: Number
+  avg: Number,
+  admited: { type: Boolean, default: false}
 });
 
 

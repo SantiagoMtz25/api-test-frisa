@@ -9,5 +9,8 @@ router.get('/', oscController.getAllOsc);
 //register OSC
 router.post('/register', oscController.oscRegister);
 
+//login
+router.put('/login', oscController.oscLogin)
+
 
 module.exports = router

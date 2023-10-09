@@ -43,12 +43,6 @@ async function userRegister(req, res) {
       if (existingUser) {
         return res.status(400).json({ message: "El teléfono ya se encuentra registrado" });
       }
-
-      if (password !== confirmPassword){
-        return res.status(400).json({
-          message: "Password and password confirmation doesn't match."
-        });
-      }
       
       let hashed_password = bcrypt.hashSync(password, 10);
   
@@ -78,7 +72,7 @@ async function userLogin(req, res) {
   
       // Revisamos si el usuario no existe y si la contraseña no es la misma
       if (!user || !bcrypt.compareSync(password, user.password)) {
-        return res.status(401).json({ message: "Credenciales incorrectas" });
+        return res.status(401).json({ message: "Credenciales incorrectas." });
       }
   
       // Generamos el token
@@ -90,15 +84,34 @@ async function userLogin(req, res) {
         }
       );
   
-      res.status(200).json({ token: token, isAdmin: user.isAdmin });
+      res.status(200).json({ 
+        message: 'Login Succesful',
+        data: {
+          token: token, 
+          adminName: user.isAdmin
+        }
+      });
     } catch (error) {
       console.error('Error login in. Contact support:',error.message);
       res.status(500).json({ message: "Error login in" });
     }
 }
 
+//add favorite
+//Esta aun no jala quite las demas para hacer pruebas
+async function addFavorite(req, res){
+  try {
+
+  } catch ( error ){
+    return res.status(500).json({
+      message: 'Error updating functionality. Contact support',
+      error: 'Internal Server Error'
+    });
+  }
+}
 module.exports = {
     getAllUsers,
     userRegister,
-    userLogin
+    userLogin,
+    addFavorite
 }
