@@ -1,4 +1,4 @@
-const User = require("../model/user");
+const User = require("../schemas/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
@@ -29,13 +29,14 @@ async function getAllUsers(req, res){
 async function userRegister(req, res) {
     try {
       const { 
+        name,
         lastname,
         email,
+        password, 
+        confirmPassword,
         phoneNumber,
         state,
-        city,
-        password,
-        confirmPassword,
+        city
        } = req.body;
       
       const existingUser = await User.findOne({ phoneNumber });
@@ -53,12 +54,14 @@ async function userRegister(req, res) {
       let hashed_password = bcrypt.hashSync(password, 10);
   
       const newUser = new User({
+        name: name,
         lastname: lastname,
         email: email,
         phoneNumber: phoneNumber,
-        state: state,
-        city: city,
         password: hashed_password,
+        confirmPassword: hashed_password,
+        state: state,
+        city: city
       });
       await newUser.save();
       res.status(201).json({ message: "Registro exitoso" });
@@ -71,10 +74,10 @@ async function userRegister(req, res) {
 //login
 async function userLogin(req, res) {
     try {
-      const { lastname, password } = req.body;
+      const { email, password } = req.body;
   
       // Revisamos si el usuario existe.
-      const user = await User.findOne({ lastname });
+      const user = await User.findOne({ email });
   
       // Revisamos si el usuario no existe y si la contraseña no es la misma
       if (!user || !bcrypt.compareSync(password, user.password)) {

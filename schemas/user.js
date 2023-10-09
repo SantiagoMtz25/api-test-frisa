@@ -2,18 +2,18 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const UserSchema = Schema({
+  name: String,
   lastname: String,
   email: String,
+  password:  String,
+  confirmPassword: String,
   phoneNumber:  String,
   state:  String,
   city:  String,
-  password:  String,
   isAdmin: { type: Boolean, default: false },
   favoriteOrganizations: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Orgs" },
   ],
 });
 
-
 module.exports = mongoose.model("users", UserSchema);
-
