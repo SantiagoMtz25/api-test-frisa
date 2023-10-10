@@ -14,3 +14,4 @@ router.post('/register', userController.userRegister)
 router.put('/login', userController.userLogin)
 
 module.exports = router
+

@@ -1,6 +1,6 @@
 const User = require("../schemas/user");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //Get all 
 async function getAllUsers(req, res){
@@ -33,7 +33,6 @@ async function userRegister(req, res) {
         lastname,
         email,
         password, 
-        confirmPassword,
         phoneNumber,
         state,
         city
@@ -45,12 +44,6 @@ async function userRegister(req, res) {
         return res.status(400).json({ message: "El teléfono ya se encuentra registrado" });
       }
 
-      if (password !== confirmPassword){
-        return res.status(400).json({
-          message: "Password and password confirmation doesn't match."
-        });
-      }
-      
       let hashed_password = bcrypt.hashSync(password, 10);
   
       const newUser = new User({
@@ -59,7 +52,6 @@ async function userRegister(req, res) {
         email: email,
         phoneNumber: phoneNumber,
         password: hashed_password,
-        confirmPassword: hashed_password,
         state: state,
         city: city
       });
@@ -73,31 +65,36 @@ async function userRegister(req, res) {
 }
 //login
 async function userLogin(req, res) {
-    try {
-      const { email, password } = req.body;
-  
-      // Revisamos si el usuario existe.
-      const user = await User.findOne({ email });
-  
-      // Revisamos si el usuario no existe y si la contraseña no es la misma
-      if (!user || !bcrypt.compareSync(password, user.password)) {
-        return res.status(401).json({ message: "Credenciales incorrectas" });
-      }
-  
-      // Generamos el token
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    
+    if (!user || !bcrypt.compareSync(password, user.password)){
+      return res.status(401).json({ message: "Credenciales incorrectas" });
+    }
+    // Revisamos si la user no existe y si la contraseña no es la misma y si ya esta admitida
+    if ( bcrypt.compareSync(password, user.password) ) {
+      
       const token = jwt.sign(
         { name: user.name, userId: user._id },
         "your-secret-key",
         {
-          expiresIn: "1h",
+        expiresIn: "1h",
         }
-      );
-  
-      res.status(200).json({ token: token, isAdmin: user.isAdmin });
-    } catch (error) {
-      console.error('Error login in. Contact support:',error.message);
-      res.status(500).json({ message: "Error login in" });
+      );  
+      return res.status(200).json({ 
+        message: 'Login Succsesfull.', 
+        token: token, 
+        isAdmin: user.isAdmin 
+      });
     }
+    
+    res.status(400).json({ message: 'Aun no tiene permisos para acceder como Organizacion'})
+
+  } catch (error) {
+    console.error('Error login in as user. Contact support:',error.message);
+    res.status(500).json({ message: "Error login in as user" });
+  }
 }
 
 module.exports = {

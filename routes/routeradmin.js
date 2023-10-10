@@ -3,14 +3,12 @@ const router = express.Router()
 
 const oscController = require('../controllers/oscController');
 
-//Get All OSC
-router.get('/', oscController.getAllOsc);
+
+//Login 
+router.get('/getAll', oscController.getAllOsc);
 
 //register OSC
 router.post('/register', oscController.oscRegister);
-
-//login
-router.put('/login', oscController.oscLogin)
 
 
 module.exports = router

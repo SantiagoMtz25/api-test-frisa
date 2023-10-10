@@ -6,7 +6,6 @@ const UserSchema = Schema({
   lastname: String,
   email: String,
   password:  String,
-  confirmPassword: String,
   phoneNumber:  String,
   state:  String,
   city:  String,
@@ -16,4 +15,4 @@ const UserSchema = Schema({
   ],
 });
 
-module.exports = mongoose.model("users", UserSchema);
+module.exports = mongoose.model("Users", UserSchema);
