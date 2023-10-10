@@ -12,9 +12,12 @@ const oscSchema = Schema({
   email: String,
   webpage: String,
   category: String,
-  avg: Number,
+  password: { type : String, default: null },
+  valGiven: { type: Number, default: 0 },
+  totalVotes: { type: Number, default: 0},
+  avg: {type: Number, default: 0},
   isAdmin: { type: Boolean, default: true },
-  admited: { type: Boolean, default: false }
+  admited: { type: Boolean, default: true }
 });
 
 module.exports = mongoose.model("Orgs", oscSchema);

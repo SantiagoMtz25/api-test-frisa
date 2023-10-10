@@ -10,7 +10,7 @@ router.get('/',userController.getAllUsers)
 //Registration
 router.post('/register', userController.userRegister)
 
-//Login
+//login
 router.put('/login', userController.userLogin)
 
 module.exports = router
