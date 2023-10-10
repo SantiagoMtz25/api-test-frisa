@@ -206,7 +206,6 @@ async function oscLogin(req, res) {
     }
 }
 
-
 module.exports = {
   getAllOsc,
   orgGrade,
