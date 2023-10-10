@@ -35,7 +35,7 @@ async function addfavorites(req,res){
       name,
       category
     } = req.body;
-    
+
   } catch (error){
     console.log("Error adding to favorites.");
     return res.status(500).json({
@@ -70,13 +70,13 @@ async function userRegister(req, res) {
         name: name,
         lastname: lastname,
         email: email,
-        phoneNumber: phoneNumber,
         password: hashed_password,
+        phoneNumber: phoneNumber,
         state: state,
         city: city
       });
       await newUser.save();
-      res.status(201).json({ message: "Registro exitoso" });
+      return res.status(201).json({ message: "Registro exitoso" });
 
     } catch (error) {
       console.error('Error in user register. Contact support:',error.message);
