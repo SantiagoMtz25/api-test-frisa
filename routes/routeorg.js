@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router()
-const validateJWT = require()
+
 
 
 const oscController = require('../controllers/oscController');
