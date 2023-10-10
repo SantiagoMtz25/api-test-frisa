@@ -25,6 +25,26 @@ async function getAllUsers(req, res){
       res.status(500).json({ message: "Error retreving users."});
     }
 }
+//Delete user favorites
+
+//User Favorites
+async function addfavorites(req,res){
+  try {
+    const {
+      token,
+      name,
+      category
+    } = req.body;
+    
+  } catch (error){
+    console.log("Error adding to favorites.");
+    return res.status(500).json({
+      message: 'Error adding to favorites.',
+      error: 'Internal Server Error'
+    })
+  }
+}
+
 //Register
 async function userRegister(req, res) {
     try {
@@ -96,6 +116,7 @@ async function userLogin(req, res) {
     res.status(500).json({ message: "Error login in as user" });
   }
 }
+
 
 module.exports = {
     getAllUsers,
