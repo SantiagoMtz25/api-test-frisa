@@ -8,7 +8,7 @@ const connectionDB = require('./config');
 const userRoutes = require("./routes/routeuser");
 const oscRoutes = require("./routes/routeorg");
 const adminRoutes = require("./routes/routeradmin");
-
+const auth = require("./routes/routerauth")
 
 
 //Cuando en el link lea /users o /ocs accedera a las rutas ya declaradas previamente
@@ -17,6 +17,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/osc", oscRoutes);
 app.use("/admin", adminRoutes)
+app.use("/auth", auth)
 dotenv.config()
 
 //Mostramos en que puerto se esta corriendo el servidor

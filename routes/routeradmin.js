@@ -8,7 +8,7 @@ const oscController = require('../controllers/oscController');
 router.get('/getAll', oscController.getAllOsc);
 
 //register OSC
-router.post('/register', oscController.oscRegister);
+//router.post('/register', oscController.oscRegister);
 
 
 module.exports = router

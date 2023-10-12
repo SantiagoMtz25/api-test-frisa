@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router()
-//const verifyToken = require("../middleware/verify");
+const verifyToken = require("../middleware/verify");
 
 const userController = require('../controllers/userController')
 
 //Get All users
-router.get('/',userController.getAllUsers)
+router.get('/:userName?',userController.getAllUsers)
 
-//Registration
-router.post('/register', userController.userRegister)
+//Org grade
+router.patch('/grade_org', [verifyToken] ,userController.orgGrade);
 
-//Login
-router.put('/login', userController.userLogin)
+//Add favorites
+router.patch('/add_favorites', [verifyToken], userController.addfavorites)
 
 module.exports = router
 

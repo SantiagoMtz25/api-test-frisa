@@ -9,6 +9,7 @@ const UserSchema = Schema({
   phoneNumber:  String,
   state:  String,
   city:  String,
+  activeToken: String,
   isAdmin: { type: Boolean, default: false },
   favoriteOrganizations: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Orgs" },
