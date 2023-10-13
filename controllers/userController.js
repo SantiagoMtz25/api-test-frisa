@@ -75,7 +75,7 @@ async function orgGrade(req, res){
   }
 } 
 
-//User Favorites
+//User add Favorites
 async function addfavorites(req,res){
   try {
     const id = req.user.id;

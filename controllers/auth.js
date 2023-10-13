@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 //User Register
 async function userRegister(req, res) {
+    console.log('Peticion Recibida')
     try {
       const { 
         name,
