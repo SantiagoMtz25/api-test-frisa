@@ -35,6 +35,7 @@ async function userRegister(req, res) {
         city: city
       });
       await newUser.save();
+      console.log('Registro exitoso')
       return res.status(201).json({ message: "Registro exitoso" });
 
     } catch (error) {
