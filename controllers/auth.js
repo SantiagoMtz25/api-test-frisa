@@ -49,7 +49,7 @@ async function userLogin(req, res) {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      
+      console.log('Request recived')
       if (!user || !bcrypt.compareSync(password, user.password)){
         return res.status(401).json({ message: "Credenciales incorrectas" });
       }
@@ -62,10 +62,11 @@ async function userLogin(req, res) {
           {
           expiresIn: "1h",
           }
-        );  
+        );
+        console.log('Login Succsesfull')
         return res.status(200).json({ 
-          message: 'Login Succsesfull.', 
-          token: token, 
+          token: token,
+          message: 'Login Succsesfull.',  
           isAdmin: user.isAdmin 
         });
       }
