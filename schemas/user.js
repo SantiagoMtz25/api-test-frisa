@@ -11,9 +11,10 @@ const UserSchema = Schema({
   city:  String,
   activeToken: String,
   isAdmin: { type: Boolean, default: false },
-  favoriteOrganizations: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Orgs" },
-  ],
+  favoriteOrganizations: [{
+    type: Schema.Types.ObjectId,
+    ref: 'orgs' 
+  }]
 });
 
 module.exports = mongoose.model("Users", UserSchema);

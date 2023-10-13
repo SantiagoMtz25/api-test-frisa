@@ -1,5 +1,6 @@
 const User = require("../schemas/user");
 const Osc = require("../schemas/org");
+const user = require("../schemas/user");
 
 //Get all 
 async function getAllUsers(req, res){
@@ -85,23 +86,24 @@ async function addfavorites(req,res){
     } = req.body;
 
     const favOrg = await Osc.findOne ({ name: name, category: category });
-    if (favOrg) {
-      await User.updateOne(
-        { _id: id },
-        { $set: {
-          favoriteOrganizations : [ favOrg.id ]
-        }}
-      );
-      return res.status(200).json({
-        message: 'Organization Added to favorites.'
-      })
+    console.log(favOrg);
+    if (!favOrg) {
+      return res.status(404).json({ 
+        message: 'Organization not found' 
+      });
     }
-    res.status(201).json({
-      message: 'No organizations were selected. Cannot add to favorites.'
-    }); 
+
+    await User.updateOne(
+      { _id: id }, 
+      { $push: { favoriteOrganizations: favOrg } } 
+    )
+    console.log('Organization Added to favorites')
+    return res.status(200).json({
+      message: 'Organization Added to favorites.'
+    })
 
   } catch (error){
-    console.log("Error adding to favorites.");
+    console.log("Error adding to favorites.", error.message);
     return res.status(500).json({
       message: 'Error adding to favorites.',
       error: 'Internal Server Error'
@@ -109,6 +111,20 @@ async function addfavorites(req,res){
   }
 }
 
+//Get all fav
+async function getAllFav(req,res){
+  try{
+    const userId = req.user;
+    const results = await User.find({ _id: userId });
+
+  } catch(error){
+    console.log('Error obteniendo los favoritos de ususario:', error.message)
+    return res.status(500).json({
+      message: 'Error obteniendo los favoritos de ususario: ',
+      error: 'Internal Server Error'
+    })
+  }
+}
 
 
 module.exports = {

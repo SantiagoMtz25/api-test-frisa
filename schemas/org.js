@@ -12,7 +12,7 @@ const oscSchema = Schema({
   email: String,
   webpage: String,
   category: String,
-  password: { type : String, default: null },
+  password: { type: String, default: ''},
   valGiven: { type: Number, default: 0 },
   totalVotes: { type: Number, default: 0},
   avg: {type: Number, default: 0},

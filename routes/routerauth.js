@@ -8,7 +8,7 @@ const router = express.Router();
 const auth = require('../controllers/auth')
 
 //register user
-router.post('/userregister', auth.userRegister)
+router.post('/userbbregister', auth.userRegister)
 //user login user
 router.put('/user_login', auth.userLogin )
 //register osc

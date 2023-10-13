@@ -92,17 +92,14 @@ async function oscRegister(req, res) {
         email,
         webpage,
         category,
-        password,
-        admited
       } = req.body;
-      
+      console.log('Obtuve los datos')
       const existinOsc = await Osc.findOne({ email });
-  
+      console.log('Obtuve un registro')
+
       if (existinOsc) {
         return res.status(400).json({ message: "El osc ya se encuentra dentro de registro" });
       } 
-
-      let hashed_password = bcrypt.hashSync(password, 10);
 
       const newOsc = new Osc({ 
         name: name,
@@ -115,8 +112,6 @@ async function oscRegister(req, res) {
         email: email,
         webpage: webpage,
         category: category,
-        password: hashed_password,
-        admited: admited
       });
       await newOsc.save();
 
