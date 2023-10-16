@@ -1,40 +1,5 @@
 const Osc = require("../schemas/org");
 
-//Get All
-async function getAllOsc(req, res){
-    try {
-      const orgName = req.params.name;
-      if (orgName){
-        const result = await Osc.findOne({ name: orgName });
-        if (result){
-            return res.status(201).json({
-                message: 'Organisation retrieved correctly',
-                data: {
-                    result
-                },
-            });
-        }
-      }
-      const results = await Osc.find({});
-      if (results){
-          return res.status(201).json({
-              message: 'Organisations list retrieved correctly',
-              data: {
-                  results
-              },
-          });
-      }
-      res.status(400).json({
-          message: 'There are no Organisations registered',
-          data: {
-              results
-          }
-      });
-    } catch (error){
-        console.log(error.message);
-        return res.status(500).json({ message: "Error retriving Ocs requests."})
-    }
-}
 
 //Update Osc Account
 async function orgUpdateAcount(req,res){
@@ -82,7 +47,5 @@ async function orgUpdateAcount(req,res){
 }
 
 module.exports = {
-  getAllOsc,
   orgUpdateAcount,
-
 }

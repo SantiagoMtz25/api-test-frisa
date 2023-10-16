@@ -10,10 +10,11 @@ const auth = require('../controllers/auth')
 //register user
 router.post('/userregister', auth.userRegister)
 //user login user
-router.put('/user_login', auth.userLogin )
+router.put('/userlogin', auth.userLogin )
+
 //register osc
-router.post('/osc_register', auth.oscRegister)
+router.post('/oscregister', auth.oscRegister)
 //osc login
-router.put('/osc_login', auth.oscLogin)
+router.put('/osclogin', auth.oscLogin)
 
 module.exports = router

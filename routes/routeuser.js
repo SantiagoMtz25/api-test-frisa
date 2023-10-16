@@ -2,16 +2,27 @@ const express = require("express");
 const router = express.Router()
 const verifyToken = require("../middleware/verify");
 
-const userController = require('../controllers/userController')
+const userController = require('../controllers/userController');
 
-//Get All users
-router.get('/:userName?',userController.getAllUsers)
+//Get All OSC
+router.get('/getAll', [verifyToken],userController.getAllOsc);
 
-//Org grade
-router.patch('/grade_org', [verifyToken] ,userController.orgGrade);
+//Grade Org
+router.patch('/gradeorg', [verifyToken], userController.orgGrade);
 
 //Add favorites
-router.patch('/add_favorites', [verifyToken], userController.addfavorites)
+router.patch('/addFavorite', [verifyToken], userController.addfavorites)
+
+//Get all fav
+router.get('/getUserFavoriteOrganizations', [verifyToken], userController.getAllFav)
+
+//Reomve favorites
+router.patch('/removeFavorite', [verifyToken], userController.removeFavorite)
+
+//User update account
+//router.patch('/userUpdateAccount', [verifyToken], userController.updateUserAccount)
+
+
 
 module.exports = router
 

@@ -5,11 +5,13 @@ const verifyToken = require("../middleware/verify");
 
 const oscController = require('../controllers/oscController');
 
-//Get All OSC
-router.get('/getAll/:name?', oscController.getAllOsc);
+//Update osc acount
+router.patch('/orgUpdateAccount', [verifyToken], oscController.orgUpdateAcount);
 
-//Update osc
-router.patch('/update_org', [verifyToken], oscController.orgUpdateAcount);
+//Osc get grade
+//router.get('/getgrade',[verifyToken],oscController.getGrade)
+
+
 
 
 module.exports = router

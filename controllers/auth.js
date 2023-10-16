@@ -60,7 +60,7 @@ async function userLogin(req, res) {
           { id: user._id },
           "your-secret-key",
           {
-          expiresIn: "1h",
+          expiresIn: "24h",
           }
         );
         console.log('Login Succsesfull')
