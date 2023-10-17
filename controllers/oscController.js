@@ -4,7 +4,8 @@ const Osc = require("../schemas/org");
 //Update Osc Account
 async function orgUpdateAcount(req,res){
   try {
-    const id = req.user.id;
+    console.log('Peticion recibida')
+    const oscId = req.osc.id;
     const {
       state,
       city,
@@ -15,24 +16,30 @@ async function orgUpdateAcount(req,res){
       category
     } = req.body;
 
-    const results = await Osc.findOne({ _id: id });
+    const results = await Osc.findOne({ _id: oscId });
     if (results){
-      await Osc.updateOne(
-        { 
-        _id: results.id 
-        },
-        {
-          $set:{
-            state: state,
-            city: city,
-            phoneNumber: phoneNumber,
-            description: description,
-            rfc: rfc,
-            webpage: webpage,
-            category:category
-          }
-        }
-      );
+      if (state != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ state: state } })
+      }
+      if (city != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ city: city } })
+      }
+      if (phoneNumber != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ phoneNumber: phoneNumber } })
+      }
+      if (description != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ description: description } })
+      }
+      if (rfc != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ rfc: rfc } })
+      }
+      if (webpage != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ webpage: webpage } })
+      }
+      if (category != ''){
+        await Osc.updateOne({ _id:oscId },{ $set:{ category: category } })
+      }
+      console.log('La cuenta de la osc ha sido actualizada exitosamente, gracias por su atencion hasta luego')
       return res.status(200).json({
         message: 'Organization information updated succesfully.'
       })
@@ -46,6 +53,20 @@ async function orgUpdateAcount(req,res){
   }
 }
 
+async function getGrade(req,res){
+  try{
+    const oscId = req.osc.id;
+    const osc = await Osc.findOne({ _id:oscId });
+
+    if (osc){
+      c
+    }
+  } catch(error){
+    console.log('Error obteniendo el garde')
+  }
+}
+
 module.exports = {
   orgUpdateAcount,
+  getGrade
 }

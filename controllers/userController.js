@@ -169,6 +169,7 @@ async function removeFavorite(req,res){
   }
 }
 
+//Update acount user
 async function updateAccount(req,res){
   try{
     const userId = req.user.id;

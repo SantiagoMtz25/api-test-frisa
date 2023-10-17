@@ -9,7 +9,7 @@ const oscController = require('../controllers/oscController');
 router.patch('/orgUpdateAccount', [verifyToken], oscController.orgUpdateAcount);
 
 //Osc get grade
-//router.get('/getgrade',[verifyToken],oscController.getGrade)
+router.get('/getgrade',[verifyToken],oscController.getGrade)
 
 
 

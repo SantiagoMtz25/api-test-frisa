@@ -54,7 +54,6 @@ async function userLogin(req, res) {
       if (!user || !bcrypt.compareSync(password, user.password)){
         return res.status(401).json({ message: "Credenciales incorrectas" });
       }
-
       const token = jwt.sign(
         { id: user._id },
         "your-secret-key",
@@ -126,36 +125,38 @@ async function oscLogin(req, res) {
     try {
       const { email, password } = req.body;
       
-      const osc = await Osc.findOne({ email });
+      const osc = await Osc.find({ email });
+      
+      if (osc.admited != true){
+        console.log('Aun no tiene permisos para acceder como Organizacion');
+        return res.status(400).json({ message: 'Aun no tiene permisos para acceder como Organizacion'});
+      }
       
       if (!osc || !bcrypt.compareSync(password, osc.password)){
-        return res.status(401).json({ message: "Credenciales incorrectas" });
+        console.log('Credenciales incorrectas.');
+        return res.status(400).json({
+          message:'Credenciales incorrectas'
+        })
       }
-      // Revisamos si la osc no existe y si la contraseña no es la misma y si ya esta admitida
-      if ( bcrypt.compareSync(password, osc.password) && osc.admited == true ) {
-        
-        const token = jwt.sign(
-          { id: osc._id },
-          "your-secret-key",
-          {
-          expiresIn: "1h",
-          }
-        );  
-        return res.status(200).json({ 
-          message: 'Login Succsesfull.', 
-          token: token, 
-          isAdmin: osc.isAdmin 
-        });
-      }
-      
-      res.status(400).json({ message: 'Aun no tiene permisos para acceder como Organizacion'})
-
+      const token = jwt.sign(
+        { id: osc._id },
+        "your-secret-key",
+        {
+        expiresIn: "24h",
+        }
+      );  
+      console.log('Acceso a la plataforma como organizacion exitoso, bienvenido');
+      return res.status(200).json({ 
+        message: 'Login Succsesfull.', 
+        token: token,
+        isAdmin: osc.isAdmin 
+      });
+  
     } catch (error) {
       console.error('Error login in as osc. Contact support:',error.message);
       res.status(500).json({ message: "Error login in as osc" });
     }
 }
-
 
 module.exports = {
     userLogin,
