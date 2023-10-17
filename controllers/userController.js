@@ -168,10 +168,13 @@ async function removeFavorite(req,res){
     })
   }
 }
+
+
 module.exports = {
     addfavorites,
     orgGrade,
     getAllOsc,
     getAllFav,
-    removeFavorite
+    removeFavorite,
+    
 }

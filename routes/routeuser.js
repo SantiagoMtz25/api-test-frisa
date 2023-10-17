@@ -20,7 +20,9 @@ router.get('/getUserFavoriteOrganizations', [verifyToken], userController.getAll
 router.patch('/removeFavorite', [verifyToken], userController.removeFavorite)
 
 //User update account
-//router.patch('/userUpdateAccount', [verifyToken], userController.updateUserAccount)
+//router.patch('/userUpdateAccount', [
+    //verifyToken
+//], userController.updateAccount)
 
 
 

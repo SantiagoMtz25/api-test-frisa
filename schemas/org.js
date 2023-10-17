@@ -17,7 +17,7 @@ const oscSchema = Schema({
   totalVotes: { type: Number, default: 0},
   avg: {type: Number, default: 0},
   isAdmin: { type: Boolean, default: true },
-  admited: { type: Boolean, default: true }
+  admited: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model("Orgs", oscSchema);
