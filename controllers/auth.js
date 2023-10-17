@@ -49,29 +49,26 @@ async function userLogin(req, res) {
     try {
       const { email, password } = req.body;
       const user = await User.findOne({ email });
-      console.log('Request recived')
+
+      console.log('Request recived');
       if (!user || !bcrypt.compareSync(password, user.password)){
         return res.status(401).json({ message: "Credenciales incorrectas" });
       }
-      // Revisamos si la user no existe y si la contraseña no es la misma y si ya esta admitida
-      if ( bcrypt.compareSync(password, user.password) ) {
-        
-        const token = jwt.sign(
-          { id: user._id },
-          "your-secret-key",
-          {
-          expiresIn: "24h",
-          }
-        );
-        console.log('User Login Succsesfull')
-        return res.status(200).json({ 
-          token: token,
-          message: 'Login Succsesfull.',  
-          isAdmin: user.isAdmin 
-        });
-      }
-      console.log('No se pudo acceder')
-      res.status(400).json({ message: 'No se pudo acceder'})
+
+      const token = jwt.sign(
+        { id: user._id },
+        "your-secret-key",
+        {
+        expiresIn: "24h",
+        }
+      );
+      console.log('User Login Succsesfull');
+      return res.status(200).json({ 
+        token: token,
+        message: 'Login Succsesfull.',  
+        isAdmin: user.isAdmin 
+      });
+    
   
     } catch (error) {
       console.error('Error login in as user. Contact support:',error.message);
