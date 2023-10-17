@@ -182,16 +182,16 @@ async function updateAccount(req,res){
     const exitingUser = await User.findOne({ _id: userId });
     if (exitingUser){
       if (state != ''){
-        await User.updateOne({_id:userId},{set:{ state: state }})
+        await User.updateOne({_id:userId},{$set:{ state: state }})
       }
       if (city != ''){
-        await User.updateOne({_id:userId},{set:{ city: city }})
+        await User.updateOne({_id:userId},{$set:{ city: city }})
       }
       if (phoneNumber != ''){
-        await User.updateOne({_id:userId},{set:{ phoneNumber: phoneNumber }})
+        await User.updateOne({_id:userId},{$set:{ phoneNumber: phoneNumber }})
       }
       if (password != ''){
-        await User.updateOne({_id:userId},{set:{ password: password }})
+        await User.updateOne({_id:userId},{$set:{ password: password }})
       }
       const updatedUser = await User.findOne({ _id: userId });
       return res.status(200).json({
