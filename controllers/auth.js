@@ -63,9 +63,12 @@ async function userLogin(req, res) {
       );
       console.log('User Login Succsesfull');
       return res.status(200).json({ 
+        message: 'Login Succsesfull.', 
         token: token,
-        message: 'Login Succsesfull.',  
-        isAdmin: user.isAdmin 
+        isAdmin: user.isAdmin,
+        name: user.name,
+        lastname: user.lastname,
+        email: user.email
       });
     
   
@@ -147,9 +150,14 @@ async function oscLogin(req, res) {
       );  
       console.log('Acceso a la plataforma como organizacion exitoso, bienvenido');
       return res.status(200).json({ 
-        message: 'Login Succsesfull.', 
+        message: 'Login Succsesfull.',
         token: token,
-        isAdmin: osc.isAdmin 
+        isAdmin: osc.isAdmin,
+        name: osc.name,
+        adminName: osc.adminName,
+        email: osc.email,
+        webpage: osc.webpage,
+        category: osc.category
       });
   
     } catch (error) {
