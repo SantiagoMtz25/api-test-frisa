@@ -150,14 +150,17 @@ async function oscLogin(req, res) {
       );  
       console.log('Acceso a la plataforma como organizacion exitoso, bienvenido');
       return res.status(200).json({ 
-        message: 'Login Succsesfull.',
         token: token,
+        message: 'Login Succsesfull.',
         isAdmin: osc.isAdmin,
         name: osc.name,
         adminName: osc.adminName,
         email: osc.email,
         webpage: osc.webpage,
-        category: osc.category
+        category: osc.category,
+        state: osc.state,
+        city: osc.city,
+        phoneNumber: osc.phoneNumber
       });
   
     } catch (error) {
