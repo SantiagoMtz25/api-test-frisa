@@ -169,6 +169,49 @@ async function removeFavorite(req,res){
   }
 }
 
+async function updateAccount(req,res){
+  try{
+    const userId = req.user.id;
+    const {
+      state,
+      city,
+      phoneNumber,
+      password
+    } = req.body;
+
+    const exitingUser = await User.findOne({ _id: userId });
+    if (exitingUser){
+      if (state != ''){
+        await User.updateOne({_id:userId},{set:{ state: state }})
+      }
+      if (city != ''){
+        await User.updateOne({_id:userId},{set:{ city: city }})
+      }
+      if (phoneNumber != ''){
+        await User.updateOne({_id:userId},{set:{ phoneNumber: phoneNumber }})
+      }
+      if (password != ''){
+        await User.updateOne({_id:userId},{set:{ password: password }})
+      }
+      const updatedUser = await User.findOne({ _id: userId });
+      return res.status(200).json({
+        message: 'Account updated succsefuly',
+        data: updatedUser
+      })
+    }
+
+    res.status(500).json({
+      message:'user not found'
+    })
+  
+  }catch(error){
+    console.log('Error actuallizando la cuenta');
+    return res.status(500).json({
+      message: 'Error actualizando la cuenta',
+      error:'Internal Server Error'
+    })
+  }
+}
 
 module.exports = {
     addfavorites,
@@ -176,5 +219,5 @@ module.exports = {
     getAllOsc,
     getAllFav,
     removeFavorite,
-    
+    updateAccount
 }
