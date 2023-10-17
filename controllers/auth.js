@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 
 //User Register
 async function userRegister(req, res) {
-    console.log('Peticion Recibida')
+    console.log('Peticion Recibida para registro de usuario')
     try {
       const { 
         name,
@@ -35,7 +35,7 @@ async function userRegister(req, res) {
         city: city
       });
       await newUser.save();
-      console.log('Registro exitoso')
+      console.log('Registro exitoso de usuario')
       return res.status(201).json({ message: "Registro exitoso" });
 
     } catch (error) {
@@ -63,14 +63,14 @@ async function userLogin(req, res) {
           expiresIn: "24h",
           }
         );
-        console.log('Login Succsesfull')
+        console.log('User Login Succsesfull')
         return res.status(200).json({ 
           token: token,
           message: 'Login Succsesfull.',  
           isAdmin: user.isAdmin 
         });
       }
-      
+      console.log('No se pudo acceder')
       res.status(400).json({ message: 'No se pudo acceder'})
   
     } catch (error) {
@@ -94,11 +94,11 @@ async function oscRegister(req, res) {
         webpage,
         category,
       } = req.body;
-      console.log('Obtuve los datos')
+      console.log('Obtuve los datos de la Osc')
       const existinOsc = await Osc.findOne({ email });
-      console.log('Obtuve un registro')
 
       if (existinOsc) {
+        console.log('Error la osc ya se encuentra dentro de registro')
         return res.status(400).json({ message: "El osc ya se encuentra dentro de registro" });
       } 
 
@@ -119,7 +119,7 @@ async function oscRegister(req, res) {
       res.status(201).json({ message: "Registro de Osc exitoso" });
       
     } catch (error) {
-      console.error('Error in osc register. Contact suport:',error.message);
+      console.error('Error in osc register. Contact suport:');
       return res.status(500).json({ message: "Error sending request" });
     }
 }
