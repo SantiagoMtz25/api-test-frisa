@@ -16,7 +16,7 @@ router.put('/acceptOsc/:id?', adminController.acceptOsc);
 router.delete('/rejectOsc/:id?', adminController.rejectOsc);
 
 // Edit an OSC request
-//router.put('/editOsc/:id', adminController.editOsc);
+router.put('/editOsc/:id?', adminController.editOsc);
 
 // Upload Excel 
 //router.post('/uploadExcelOsc', adminController.uploadExcelOsc);
