@@ -3,14 +3,26 @@ const router = express.Router();
 
 const adminController = require('../controllers/adminController');
 
-//Get all Osc 
+// Get all OSCs
 router.get('/getAllOrgs', adminController.getAllOsc);
 
-//Get All users
-router.get('/getAllUsers', adminController.getAllUsers)
+// Get all users
+router.get('/getAllUsers', adminController.getAllUsers);
 
-//register OSC
-//router.post('/register', oscController.oscRegister);
+// Accept an OSC request
+router.put('/acceptOsc/:id', adminController.acceptOsc);
 
+// Reject an OSC request
+router.delete('/rejectOsc/:id', adminController.rejectOsc);
 
-module.exports = router
+// Edit an OSC request
+router.put('/editOsc/:id', adminController.editOsc);
+
+// Upload Excel 
+router.post('/uploadExcelOsc', adminController.uploadExcelOsc);
+
+// Get a specific OSC request by its ID
+router.get('/getOsc/:id', adminController.getOscById);
+
+module.exports = router;
+
