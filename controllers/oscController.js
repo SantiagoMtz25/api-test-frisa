@@ -59,7 +59,7 @@ async function getGrade(req,res){
     const osc = await Osc.findOne({ _id:oscId });
 
     if (osc){
-      c
+      
     }
   } catch(error){
     console.log('Error obteniendo el garde')
