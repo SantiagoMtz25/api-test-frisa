@@ -240,50 +240,51 @@ async function getOscById(req,res){
 // Osc Register
 async function uploadExcelOsc(req, res) {
   try {
-    const oscs = req.body;
-    for (const oscData of oscs) {
-        const {
-            name,
-            adminName,
-            rfc,
-            description,
-            phoneNumber,
-            state,
-            city,
-            email,
-            webpage,
-            category,
-            password
-        } = oscData;
+    console.log('Peticion recibida')
+    const {
+        name,
+        adminName,
+        rfc,
+        description,
+        phoneNumber,
+        state,
+        city,
+        email,
+        webpage,
+        category,
+        password
+    } = req.body;
 
-        console.log('Intentando registrar la Osc con email:', email);
+    console.log('Intentando registrar la Osc con email');
 
-        const existingOsc = await Osc.findOne({ email });
+    const existingOsc = await Osc.findOne({ email });
 
-        if (existingOsc) {
-            console.log(`Error: la osc con email ${email} ya se encuentra dentro de registro`);
-            continue; // pasa al siguiente registro si ya existe
-        }
-
-        let hashed_password = bcrypt.hashSync(password, 10);
-
-        const newOsc = new Osc({
-            name: name,
-            adminName: adminName,
-            rfc: rfc,
-            description: description,
-            phoneNumber: phoneNumber,
-            state: state,
-            city: city,
-            email: email,
-            webpage: webpage,
-            category: category,
-            password: hashed_password
-        });
-
-        await newOsc.save();
-        console.log('Registro de Osc exitoso para:', email);
+    if (existingOsc) {
+        console.log(`Error: la osc ya se encuentra dentro de registro`);
+        return res.status(500).json({
+          message: 'La osc ya se encuentra dentro de registro'
+        })
     }
+
+    let hashed_password = bcrypt.hashSync(password, 10);
+
+    const newOsc = new Osc({
+        name: name,
+        adminName: adminName,
+        rfc: rfc,
+        description: description,
+        phoneNumber: phoneNumber,
+        state: state,
+        city: city,
+        email: email,
+        webpage: webpage,
+        category: category,
+        password: hashed_password
+    });
+
+    await newOsc.save();
+    console.log('Registro de Osc exitoso para:');
+    
 
     res.status(201).json({ message: "Proceso de registro de OSC completado" });
 

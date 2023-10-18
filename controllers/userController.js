@@ -7,14 +7,14 @@ const jwt = require("jsonwebtoken");
 async function getAllOsc(req, res){
   try {
     console.log('----Peticion recibida----')
-    const salud = await Osc.find({ category: "Salud", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const educacion = await Osc.find({ category: "Educacion", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const medioAmbiente = await Osc.find({ category: "Medio Ambiente", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const derechosHumanos = await Osc.find({ category: "Derechos Humanos", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const asociasionesReligiosas = await Osc.find({ category: "Asociaciones Religiosas", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const transportePublico = await Osc.find({ category: "Transporte Público", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const cultura = await Osc.find({ category: "Cultura", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-    const serviciosAsistenciales = await Osc.find({category: "Servicios Asistenciales", admited: true}, {_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+    const salud = await Osc.find({ category: "Salud", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true, webpage:true, category: true});
+    const educacion = await Osc.find({ category: "Educacion", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true, webpage:true, category: true});
+    const medioAmbiente = await Osc.find({ category: "Medio Ambiente", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true, webpage:true, category: true});
+    const derechosHumanos = await Osc.find({ category: "Derechos Humanos", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true, webpage:true, category: true});
+    const asociasionesReligiosas = await Osc.find({ category: "Asociaciones Religiosas", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true, webpage:true, category: true});
+    const transportePublico = await Osc.find({ category: "Transporte Público", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true,  webpage:true, category: true});
+    const cultura = await Osc.find({ category: "Cultura", admited: true},{_id: true, name: true,	description: true, phoneNumber: true, email: true,  webpage:true, category: true});
+    const serviciosAsistenciales = await Osc.find({category: "Servicios Asistenciales", admited: true}, {_id: true, name: true,	description: true, phoneNumber: true, email: true,  webpage:true, category: true});
     console.log('==== Organizaciones obtenidas ====')
     return res.status(201).json({
       salud: salud,
