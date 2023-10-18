@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const adminController = require('../controllers/adminController');
+const { verify } = require("jsonwebtoken");
 
 // Get all OSCs
 router.get('/getAllOrgs', adminController.getAllOsc);

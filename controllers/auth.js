@@ -92,6 +92,7 @@ async function oscRegister(req, res) {
         email,
         webpage,
         category,
+        password,
       } = req.body;
       console.log('Obtuve los datos de la Osc')
       const existinOsc = await Osc.findOne({ email });
@@ -131,19 +132,19 @@ async function oscLogin(req, res) {
     try {
       const { email, password } = req.body;
       
-      const osc = await Osc.find({ email });
+      const osc = await Osc.findOne({ email });
       
       if (osc[0].admited != true){
         console.log('Aun no tiene permisos para acceder como Organizacion');
         return res.status(400).json({ message: 'Aun no tiene permisos para acceder como Organizacion'});
       }
-      
       if (!osc || !bcrypt.compareSync(password, osc.password)){
         console.log('Credenciales incorrectas.');
         return res.status(400).json({
           message:'Credenciales incorrectas'
         })
       }
+      console.log('No llegue hasta aqui')
       const token = jwt.sign(
         { id: osc._id },
         "your-secret-key",

@@ -8,16 +8,16 @@ const userController = require('../controllers/userController');
 router.get('/getAllOrgs', [verifyToken],userController.getAllOsc);
 
 //Grade Org
-router.patch('/gradeorg/:id?', [verifyToken], userController.orgGrade);
+router.patch('/gradeorg/:oscId?', [verifyToken], userController.orgGrade);
 
 //Add favorites
-router.patch('/addFavorite/:id?', [verifyToken], userController.addfavorites)
+router.patch('/addFavorite/:oscId?', [verifyToken], userController.addfavorites)
 
 //Get all fav
 router.get('/getUserFavoriteOrganizations', [verifyToken], userController.getAllFav)
 
 //Reomve favorites
-router.patch('/removeFavorite/:id?', [verifyToken], userController.removeFavorite)
+router.patch('/removeFavorite/:oscId?', [verifyToken], userController.removeFavorite)
 
 //User update account
 router.patch('/userUpdateAccount', [

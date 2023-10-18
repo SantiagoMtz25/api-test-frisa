@@ -36,7 +36,7 @@ async function getAllOsc(req, res){
 async function orgGrade(req, res){
   try {
     console.log('Peticion Recibida');
-    const { oscId } = req.params.id ;
+    const { oscId } = req.params ;
     const results = await Osc.findOne({ _id: oscId });
 
     if (results){
@@ -76,9 +76,9 @@ async function addfavorites(req,res){
   try {
     console.log('Peticion recibida');
     const id = req.user.id;
-    const {oscId} = req.params.id;
+    const {oscId} = req.params;
 
-    const favOrg = await Osc.findOne ({ _id: oscId });
+    const favOrg = await Osc.findOne({ _id: oscId });
     if (!favOrg) {
       console.log('Organizacoin no encontrada')
       return res.status(404).json({ 
@@ -109,13 +109,13 @@ async function getAllFav(req,res){
   try{
     console.log('Peticion recibida')
     const userId = req.user;
-    const results = await User.find({ _id: userId.id },{favoriteOrganizations: true});
+    const results = await User.findOne({ _id: userId.id },{favoriteOrganizations: true});
     if (results){
-      const array = results[0].favoriteOrganizations;
+      const array = results.favoriteOrganizations;
       var favorites = []
       const len = array.length;
       for (var i = 0; i < len; i++){
-        favorites[i] = await Osc.find({ _id: array[i] },{ 
+        favorites[i] = await Osc.findOne({ _id: array[i] },{ 
           name: true, 
           adminName: true, 
           rfc: true, 
@@ -152,10 +152,10 @@ async function removeFavorite(req,res){
   try{
     console.log('Peticion recibida')
     const id = req.user.id;
-    const { oscId } = req.params.id;
-    const existingOscInFav = await User.find({ _id: id },{ favoriteOrganizations: oscId });
+    const { oscId } = req.params;
+    const existingOscInFav = await User.findOne({ _id: id },{ favoriteOrganizations: oscId });
 
-    if (existingOscInFav[0].favoriteOrganizations){
+    if (existingOscInFav.favoriteOrganizations){
       await User.updateOne( { _id:id}, { $pull: { favoriteOrganizations: oscId } } )
       console.log('Organizacion removida de favoritos existosamente')
       return res.status(200).json({

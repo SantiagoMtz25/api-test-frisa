@@ -72,12 +72,12 @@ async function acceptOsc(req, res){
   try{
     console.log('Peticion recibida')
     const id = req.params.id;
-    const existingOsc = await Osc.find({ _id: id });
+    const existingOsc = await Osc.findOne({ _id: id });
     if (existingOsc){
-      if (existingOsc[0].admited != true){
+      if (existingOsc.admited != true){
         await Osc.updateOne( { _id: id }, {$set: { admited: true } } );
         const updatedOsc = await Osc.find({_id: id},{ name: true, email: true, admited: true });
-        console.log('=======> Organizacion admitida:', updatedOsc[0].name)
+        console.log('=======> Organizacion admitida:', updatedOsc.name)
         return res.status(200).json({
           message: "Organizacion admitida",
           OscAdmitida: updatedOsc
@@ -108,15 +108,15 @@ async function rejectOsc(req, res){
   try {
     console.log('Peticion recibida')
     const id = req.params.id;
-    const oscInRegister = await Osc.find({ _id: id });
+    const oscInRegister = await Osc.findOne({ _id: id });
     if (oscInRegister){
-      if(oscInRegister[0].admited == false){
+      if(oscInRegister.admited == false){
         await Osc.deleteOne({ _id: id })
         console.log("xxxxx La organizacion fue rechazada xxxxxx");
         return res.status(200).json({
           message:'La organizacion ha sido rechazada y eliminada del registro'
         })
-      } else if (oscInRegister[0].admited == false) {
+      } else if (oscInRegister.admited == false) {
         console.log("La organizacion ya fue admitida no la puede rechazar");
         return res.status(500).json({
           message: 'La organizacion ya se encuentra admitida no se puede rechazar'
@@ -150,7 +150,7 @@ async function editOsc(req, res){
     const {rfc} = req.body || '';
     const {state} = req.body || '';
     const {webpage} = req.body || '';
-    const existingOsc = await Osc.find({ _id: id });
+    const existingOsc = await Osc.findOne({ _id: id });
     console.log(existingOsc)
     if (existingOsc){
       if (adminName != ''){
@@ -207,7 +207,7 @@ async function getOscById(req,res){
   try{
     console.log('Peticion recibida')
     const {id} = req.params;
-    const org = await Osc.find({_id:id},{
+    const org = await Osc.findOne({_id:id},{
       name: true,
       adminName: true,
       rfc: true,
@@ -218,7 +218,8 @@ async function getOscById(req,res){
       email: true,
       webpage: true,
       category: true,
-      avg: true
+      avg: true,
+      admited: true
     });
     if(org){
       console.log('Organizacion obtenida')
