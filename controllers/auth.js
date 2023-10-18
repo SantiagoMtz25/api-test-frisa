@@ -101,6 +101,8 @@ async function oscRegister(req, res) {
         return res.status(400).json({ message: "El osc ya se encuentra dentro de registro" });
       } 
 
+      let hashed_password = bcrypt.hashSync(password, 10);
+
       const newOsc = new Osc({ 
         name: name,
         adminName: adminName,
@@ -112,6 +114,7 @@ async function oscRegister(req, res) {
         email: email,
         webpage: webpage,
         category: category,
+        password: hashed_password
       });
       await newOsc.save();
 
@@ -130,7 +133,7 @@ async function oscLogin(req, res) {
       
       const osc = await Osc.find({ email });
       
-      if (osc.admited != true){
+      if (osc[0].admited != true){
         console.log('Aun no tiene permisos para acceder como Organizacion');
         return res.status(400).json({ message: 'Aun no tiene permisos para acceder como Organizacion'});
       }
@@ -164,7 +167,7 @@ async function oscLogin(req, res) {
       });
   
     } catch (error) {
-      console.error('Error login in as osc. Contact support:',error.message);
+      console.error('Error login in as osc. Contact support');
       res.status(500).json({ message: "Error login in as osc" });
     }
 }

@@ -139,59 +139,54 @@ async function rejectOsc(req, res){
 async function editOsc(req, res){
   try{
     console.log('Peticion recibida')
-    const {oscId} = req.params.id;
-    const {
-      adminName,
-      admited,
-      category,
-      city,
-      description,
-      email,
-      name,
-      phoneNumber,
-      rfc,
-      state,
-      webpage
-    } = req.body;
-    const existingOsc = await Osc.find({ _id: oscId });
+    const {id}  = req.params;
+    const {adminName} = req.body || '';
+    const {category} = req.body || '';
+    const {city} = req.body || '';
+    const {description} = req.body || '';
+    const {email} = req.body || '';
+    const {name} = req.body || '';
+    const {phoneNumber} = req.body || '';
+    const {rfc} = req.body || '';
+    const {state} = req.body || '';
+    const {webpage} = req.body || '';
+    const existingOsc = await Osc.find({ _id: id });
+    console.log(existingOsc)
     if (existingOsc){
-      if (admited != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ admited: admited }})
-      }
       if (adminName != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ adminName: adminName }})
+        await Osc.updateOne({_id: id},{$set:{ adminName: adminName }})
       }
       if (name != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ name: name }})
+        await Osc.updateOne({_id: id},{$set:{ name: name }})
       }
       if (rfc != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ rfc: rfc }})
+        await Osc.updateOne({_id: id},{$set:{ rfc: rfc }})
       }
       if (description != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ description: description }})
+        await Osc.updateOne({_id: id},{$set:{ description: description }})
       }
       if (phoneNumber != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ phoneNumber: phoneNumber }})
+        await Osc.updateOne({_id: id},{$set:{ phoneNumber: phoneNumber }})
       }
       if (state != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ state: state }})
+        await Osc.updateOne({_id: id},{$set:{ state: state }})
       }
       if (city != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ city: city }})
+        await Osc.updateOne({_id: id},{$set:{ city: city }})
       }
       if (email != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ email: email }})
+        await Osc.updateOne({_id: id},{$set:{ email: email }})
       }
       if (webpage != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ webpage: webpage }})
+        await Osc.updateOne({_id: id},{$set:{ webpage: webpage }})
       }
       if (category != ''){
-        await Osc.updateOne({_id: oscId},{$set:{ category: category }})
+        await Osc.updateOne({_id: id},{$set:{ category: category }})
       }
-      console.log('Cuenta de organizacion actualizada con los datos proporcionados')
+      console.log('Cuenta de organizacion actualizada con los datos proporcionados');
       return res.status(200).json({
         message: 'Cuenta de organizacion actualizada con los datos proporcionados'
-      })
+      });
     }
 
     res.status(500).json({
@@ -199,7 +194,7 @@ async function editOsc(req, res){
     })
 
   } catch (error){
-    console('Error no se pudo actualizar la cuenta de la organizacion');
+    console.log('Error no se pudo actualizar la cuenta de la organizacion');
     return res.status(500).json({
       message: 'Error no se pudo actualizar la cuenta de la organizacion',
       error: 'Internal Server Error'

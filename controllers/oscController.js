@@ -14,7 +14,7 @@ async function orgUpdateAcount(req,res){
       rfc,
       webpage,
       category
-    } = req.body;
+    } = req.body || '';
 
     const results = await Osc.findOne({ _id: oscId });
     if (results){
