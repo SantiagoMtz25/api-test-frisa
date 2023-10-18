@@ -5,7 +5,7 @@ const verifyToken = require("../middleware/verify");
 const userController = require('../controllers/userController');
 
 //Get All OSC
-router.get('/getAll', [verifyToken],userController.getAllOsc);
+router.get('/getAllOrgs', [verifyToken],userController.getAllOsc);
 
 //Grade Org
 router.patch('/gradeorg', [verifyToken], userController.orgGrade);

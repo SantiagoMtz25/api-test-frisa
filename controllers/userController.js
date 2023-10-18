@@ -5,35 +5,32 @@ const Osc = require("../schemas/org");
 //Get All
 async function getAllOsc(req, res){
   try {
-    console.log('Peticion recibida')
-    const orgName = req.params.name;
-    if (orgName){
-      const results = await Osc.find();
-      if (results){
-          console.log('Organizacion obtenida')
-          return res.status(200).json({
-              message: 'Organisations retrieved correctly',
-              data: results.rowCount
-              
-          });
-      }
-    }
-    const results = await Osc.find({});
+    console.log('----Peticion recibida----')
+    const results = await Osc.find();
     if (results){
-        console.log('Organizaciones obtenidas')
+        const salud = await Osc.find({ category: "Salud"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const educacion = await Osc.find({ category: "Educacion"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const medioAmbiente = await Osc.find({ category: "Medio Ambiente"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const derechosHumanos = await Osc.find({ category: "Derechos Humanos"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const asociasionesReligiosas = await Osc.find({ category: "Asociaciones Religiosas"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const transportePublico = await Osc.find({ category: "Transporte Público"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const cultura = await Osc.find({ category: "Cultura"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const serviciosAsistenciales = await Osc.find({category: "Servicios Asistenciales"}, {_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        console.log('==== Organizaciones obtenidas ====')
         return res.status(201).json({
-            message: 'Organisations list retrieved correctly',
-            data: {
-                results
-            },
+            salud: salud,
+            educacion : educacion,
+            medioAmbiente : medioAmbiente,
+            derechosHumanos : derechosHumanos,
+            asociasionesReligiosas : asociasionesReligiosas,
+            transportePublico : transportePublico,
+            cultura : cultura,
+            serviciosAsistenciales : serviciosAsistenciales
         });
     }
-    console.log('Organizaciones no encontradas')
+    console.log('---- Organizaciones no encontradas ----')
     res.status(400).json({
-        message: 'Organisations not found',
-        data: {
-            results
-        }
+        message: 'Organisations not found'
     });
   } catch (error){
       console.log('Error obteniendo las Organizaciones');
@@ -122,10 +119,28 @@ async function getAllFav(req,res){
     const userId = req.user;
     const results = await User.find({ _id: userId.id },{favoriteOrganizations: true});
     if (results){
+      const array = results[0].favoriteOrganizations;
+      var objects = []
+      const len = array.length;
+      for (var i = 0; i < len; i++){
+        objects[i] = await Osc.find({ _id: array[i] },{ 
+          name: true, 
+          adminName: true, 
+          rfc: true, 
+          description: true, 
+          phoneNumber: true, 
+          state: true, 
+          city: true, 
+          email: true, 
+          webpage: true, 
+          category: true, 
+          avg: true 
+        })
+      }
       console.log('Organizaciones obtenidas exitosamente')
       return res.status(200).json({
         message: 'Favorite Organizatons retrieved succesfully.',
-        results: results[0].favoriteOrganizations
+        objects
       })
     }
     console.log('Error no se pudo obtener las organizaciones')
