@@ -10,7 +10,7 @@ router.get('/getAllOrgs', adminController.getAllOsc);
 router.get('/getAllUsers', adminController.getAllUsers);
 
 // Accept an OSC request
-//router.put('/acceptOsc/:id', adminController.acceptOsc);
+router.put('/acceptOsc/:id?', adminController.acceptOsc);
 
 // Reject an OSC request
 //router.delete('/rejectOsc/:id', adminController.rejectOsc);
