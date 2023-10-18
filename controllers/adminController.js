@@ -1,7 +1,6 @@
 const User = require("../schemas/user");
 const Osc = require("../schemas/org");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 //Get all 
 async function getAllUsers(req, res){
