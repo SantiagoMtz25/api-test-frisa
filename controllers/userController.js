@@ -18,16 +18,14 @@ async function getAllOsc(req, res){
         const serviciosAsistenciales = await Osc.find({category: "Servicios Asistenciales", admited: true}, {_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
         console.log('==== Organizaciones obtenidas ====')
         return res.status(201).json({
-          data: {
-            salud: salud,
-            educacion : educacion,
-            medioAmbiente : medioAmbiente,
-            derechosHumanos : derechosHumanos,
-            asociasionesReligiosas : asociasionesReligiosas,
-            transportePublico : transportePublico,
-            cultura : cultura,
-            serviciosAsistenciales : serviciosAsistenciales
-          }
+          salud: salud,
+          educacion : educacion,
+          medioAmbiente : medioAmbiente,
+          derechosHumanos : derechosHumanos,
+          asociasionesReligiosas : asociasionesReligiosas,
+          transportePublico : transportePublico,
+          cultura : cultura,
+          serviciosAsistenciales : serviciosAsistenciales
         });
     }
     console.log('---- Organizaciones no encontradas ----')
