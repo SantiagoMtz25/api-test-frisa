@@ -236,11 +236,68 @@ async function getOscById(req,res){
     })
   }
 }
+
+// Osc Register
+async function uploadExcelOsc(req, res) {
+  try {
+    const oscs = req.body;
+    for (const oscData of oscs) {
+        const {
+            name,
+            adminName,
+            rfc,
+            description,
+            phoneNumber,
+            state,
+            city,
+            email,
+            webpage,
+            category,
+            password
+        } = oscData;
+
+        console.log('Intentando registrar la Osc con email:', email);
+
+        const existingOsc = await Osc.findOne({ email });
+
+        if (existingOsc) {
+            console.log(`Error: la osc con email ${email} ya se encuentra dentro de registro`);
+            continue; // pasa al siguiente registro si ya existe
+        }
+
+        let hashed_password = bcrypt.hashSync(password, 10);
+
+        const newOsc = new Osc({
+            name: name,
+            adminName: adminName,
+            rfc: rfc,
+            description: description,
+            phoneNumber: phoneNumber,
+            state: state,
+            city: city,
+            email: email,
+            webpage: webpage,
+            category: category,
+            password: hashed_password
+        });
+
+        await newOsc.save();
+        console.log('Registro de Osc exitoso para:', email);
+    }
+
+    res.status(201).json({ message: "Proceso de registro de OSC completado" });
+
+  } catch (error) {
+      console.error('Error in osc register. Contact support:', error);
+      return res.status(500).json({ message: "Error sending request" });
+  }
+}
 module.exports={
   getAllUsers,
   getAllOsc,
   acceptOsc,
   rejectOsc,
   editOsc,
-  getOscById
+  getOscById,
+  uploadExcelOsc
 }

@@ -103,7 +103,7 @@ async function oscRegister(req, res) {
       } 
 
       let hashed_password = bcrypt.hashSync(password, 10);
-
+      
       const newOsc = new Osc({ 
         name: name,
         adminName: adminName,
@@ -118,7 +118,7 @@ async function oscRegister(req, res) {
         password: hashed_password
       });
       await newOsc.save();
-
+      console.log('Registro de Osc exitoso')
       res.status(201).json({ message: "Registro de Osc exitoso" });
       
     } catch (error) {
@@ -134,7 +134,7 @@ async function oscLogin(req, res) {
       
       const osc = await Osc.findOne({ email });
       
-      if (osc[0].admited != true){
+      if (osc.admited != true){
         console.log('Aun no tiene permisos para acceder como Organizacion');
         return res.status(400).json({ message: 'Aun no tiene permisos para acceder como Organizacion'});
       }

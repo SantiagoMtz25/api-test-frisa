@@ -19,11 +19,11 @@ router.delete('/rejectOsc/:id?', adminController.rejectOsc);
 // Edit an OSC request
 router.patch('/editOsc/:id?', adminController.editOsc);
 
-// Upload Excel 
-//router.post('/uploadExcelOsc', adminController.uploadExcelOsc);
-
 // Get a specific OSC request by its ID
 router.get('/getOsc/:id', adminController.getOscById);
+
+// Upload Excel 
+router.post('/uploadExcelOsc', adminController.uploadExcelOsc);
 
 module.exports = router;
 

@@ -1,6 +1,7 @@
 const User = require("../schemas/user");
 const Osc = require("../schemas/org");
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 //Get All
 async function getAllOsc(req, res){
@@ -37,6 +38,7 @@ async function orgGrade(req, res){
   try {
     console.log('Peticion Recibida');
     const { oscId } = req.params ;
+    const { avg } = req.body;
     const results = await Osc.findOne({ _id: oscId });
 
     if (results){
@@ -52,7 +54,7 @@ async function orgGrade(req, res){
           totalVotes: updatedTotVotes, 
           avg: rounded }
         });
-
+      console.log('Calificacion aceptada y agregada');
       return res.status(200).json({
         message: 'Grade changed succsesfully',
       });
@@ -153,7 +155,7 @@ async function removeFavorite(req,res){
     console.log('Peticion recibida')
     const id = req.user.id;
     const { oscId } = req.params;
-    const existingOscInFav = await User.findOne({ _id: id },{ favoriteOrganizations: oscId });
+    const existingOscInFav = await User.findOne({ _id: id });
 
     if (existingOscInFav.favoriteOrganizations){
       await User.updateOne( { _id:id}, { $pull: { favoriteOrganizations: oscId } } )
@@ -197,7 +199,8 @@ async function updateAccount(req,res){
         await User.updateOne({_id:userId},{$set:{ phoneNumber: phoneNumber }})
       }
       if (password != ''){
-        await User.updateOne({_id:userId},{$set:{ password: password }})
+        let hashed_password = bcrypt.hashSync(password, 10);
+        await User.updateOne({_id:userId},{$set:{ password: hashed_password }})
       }
       const updatedUser = await User.findOne({ _id: userId });
       console.log('Cuenta de usuario actualizada')

@@ -55,12 +55,22 @@ async function orgUpdateAcount(req,res){
 
 async function getGrade(req,res){
   try{
+    console.log('Peticion recibida')
     const oscId = req.osc.id;
     const osc = await Osc.findOne({ _id:oscId });
 
     if (osc){
-      
+      console.log('Puntaje de la organizacion obtenido')
+      const avg = osc.avg
+      return res.status(200).json({
+        avg: avg
+      });
     }
+
+    console.log('Organizacion no encontrada')
+    res.status.json(204).json({
+      message: 'Organizacion no encontrada'
+    })
   } catch(error){
     console.log('Error obteniendo el garde')
   }
