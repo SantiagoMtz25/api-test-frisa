@@ -120,10 +120,10 @@ async function getAllFav(req,res){
     const results = await User.find({ _id: userId.id },{favoriteOrganizations: true});
     if (results){
       const array = results[0].favoriteOrganizations;
-      var objects = []
+      var favorites = []
       const len = array.length;
       for (var i = 0; i < len; i++){
-        objects[i] = await Osc.find({ _id: array[i] },{ 
+        favorites[i] = await Osc.find({ _id: array[i] },{ 
           name: true, 
           adminName: true, 
           rfc: true, 
@@ -140,7 +140,7 @@ async function getAllFav(req,res){
       console.log('Organizaciones obtenidas exitosamente')
       return res.status(200).json({
         message: 'Favorite Organizatons retrieved succesfully.',
-        objects
+        favorites
       })
     }
     console.log('Error no se pudo obtener las organizaciones')
