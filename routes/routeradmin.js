@@ -22,7 +22,7 @@ router.patch('/editOsc/:id?', adminController.editOsc);
 //router.post('/uploadExcelOsc', adminController.uploadExcelOsc);
 
 // Get a specific OSC request by its ID
-//router.get('/getOsc/:id', adminController.getOscById);
+router.get('/getOsc/:id', adminController.getOscById);
 
 module.exports = router;
 

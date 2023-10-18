@@ -202,10 +202,44 @@ async function editOsc(req, res){
   }
 }
 
+// Get osc by id
+async function getOscById(req,res){
+  try{
+    console.log('Peticion recibida')
+    const {id} = req.params;
+    const org = await Osc.find({_id:id},{
+      name: true,
+      adminName: true,
+      rfc: true,
+      description: true,
+      phoneNumber: true,
+      state: true,
+      city: true,
+      email: true,
+      webpage: true,
+      category: true,
+      avg: true
+    });
+    if(org){
+      console.log('Organizacion obtenida')
+      return res.status(200).json({
+        message:'Organizacion obtenida',
+        data: { org }
+      })
+    }
+  } catch (error){
+    console.log('Error no se pudo obtener la osc');
+    return res.status(500).json({
+      message: 'Error no se pudo obtener la osc',
+      error: 'Internal Server Error'
+    })
+  }
+}
 module.exports={
   getAllUsers,
   getAllOsc,
   acceptOsc,
   rejectOsc,
-  editOsc
+  editOsc,
+  getOscById
 }
