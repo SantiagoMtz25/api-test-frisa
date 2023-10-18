@@ -104,10 +104,40 @@ async function acceptOsc(req, res){
 }
 
 // Reject osc
-
+async function rejectOsc(req, res){
+  try {
+    console.log('Peticion recibida')
+    const id = req.params.id;
+    const oscInRegister = await Osc.find({ _id: id });
+    if (oscInRegister){
+      if(oscInRegister[0].admited == false){
+        await Osc.deleteOne({ _id: id })
+        console.log("xxxxx La organizacion fue rechazada xxxxxx");
+        return res.status(200).json({
+          message:'La organizacion ha sido rechazada y eliminada del registro'
+        })
+      } else if (oscInRegister[0].admited == false) {
+        console.log("La organizacion ya fue admitida no la puede rechazar");
+        return res.status(500).json({
+          message: 'La organizacion ya se encuentra admitida no se puede rechazar'
+        })
+      }
+    }
+    res.status(204).json({
+      message: 'Organizacion no encontrada'
+    })
+  } catch (error){
+    console.log('Error no se pudo rechazar la organizacion')
+    return res.status(500).json({
+      message : 'Error no se pudo rechazar la organizacion',
+      error: 'Internal Server Error'
+    })
+  }
+}
 
 module.exports={
   getAllUsers,
   getAllOsc,
   acceptOsc,
+  rejectOsc
 }

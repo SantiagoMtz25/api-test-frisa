@@ -6,16 +6,16 @@ const Osc = require("../schemas/org");
 async function getAllOsc(req, res){
   try {
     console.log('----Peticion recibida----')
-    const results = await Osc.find();
+    const results = await Osc.find({ admited: true });
     if (results){
-        const salud = await Osc.find({ category: "Salud"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const educacion = await Osc.find({ category: "Educacion"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const medioAmbiente = await Osc.find({ category: "Medio Ambiente"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const derechosHumanos = await Osc.find({ category: "Derechos Humanos"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const asociasionesReligiosas = await Osc.find({ category: "Asociaciones Religiosas"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const transportePublico = await Osc.find({ category: "Transporte Público"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const cultura = await Osc.find({ category: "Cultura"},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
-        const serviciosAsistenciales = await Osc.find({category: "Servicios Asistenciales"}, {_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const salud = await Osc.find({ category: "Salud", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const educacion = await Osc.find({ category: "Educacion", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const medioAmbiente = await Osc.find({ category: "Medio Ambiente", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const derechosHumanos = await Osc.find({ category: "Derechos Humanos", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const asociasionesReligiosas = await Osc.find({ category: "Asociaciones Religiosas", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const transportePublico = await Osc.find({ category: "Transporte Público", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const cultura = await Osc.find({ category: "Cultura", admited: true},{_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
+        const serviciosAsistenciales = await Osc.find({category: "Servicios Asistenciales", admited: true}, {_id: true, name: true,	description: true, category: true, webpage:true, phoneNumber: true, email: true});
         console.log('==== Organizaciones obtenidas ====')
         return res.status(201).json({
             salud: salud,
@@ -42,8 +42,8 @@ async function getAllOsc(req, res){
 async function orgGrade(req, res){
   try {
     console.log('Peticion Recibida');
-    const { name, avg } = req.body  ;
-    const results = await Osc.findOne({ name: name });
+    const { oscId } = req.params.id ;
+    const results = await Osc.findOne({ _id: oscId });
 
     if (results){
       const updatedvalGiven = results.valGiven + avg;
@@ -82,9 +82,7 @@ async function addfavorites(req,res){
   try {
     console.log('Peticion recibida');
     const id = req.user.id;
-    const {
-      oscId
-    } = req.body;
+    const {oscId} = req.params.id;
 
     const favOrg = await Osc.findOne ({ _id: oscId });
     if (!favOrg) {
@@ -139,7 +137,6 @@ async function getAllFav(req,res){
       }
       console.log('Organizaciones obtenidas exitosamente')
       return res.status(200).json({
-        message: 'Favorite Organizatons retrieved succesfully.',
         favorites
       })
     }
@@ -161,7 +158,7 @@ async function removeFavorite(req,res){
   try{
     console.log('Peticion recibida')
     const id = req.user.id;
-    const { oscId } = req.body;
+    const { oscId } = req.params.id;
     const existingOscInFav = await User.find({ _id: id },{ favoriteOrganizations: oscId });
 
     if (existingOscInFav[0].favoriteOrganizations){

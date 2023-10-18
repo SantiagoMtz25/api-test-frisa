@@ -13,7 +13,7 @@ router.get('/getAllUsers', adminController.getAllUsers);
 router.put('/acceptOsc/:id?', adminController.acceptOsc);
 
 // Reject an OSC request
-//router.delete('/rejectOsc/:id', adminController.rejectOsc);
+router.delete('/rejectOsc/:id?', adminController.rejectOsc);
 
 // Edit an OSC request
 //router.put('/editOsc/:id', adminController.editOsc);
